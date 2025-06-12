@@ -115,29 +115,6 @@ To browse or run the code examples:
 3. **Run the example files** as standard Java applications.
 
 ---
-
-## 🏷️ Key Concepts Covered
-
-- **Thread Basics:** Creating, starting, and managing threads
-- **Thread Lifecycle:** Understanding thread states
-- **Synchronization:** Locks, synchronized blocks/methods, race conditions
-- **Volatile Keyword**
-- **Inter-thread Communication:** wait(), notify(), notifyAll()
-- **Thread Pools:** ExecutorService, Callable, Future
-- **Advanced Locks:** ReentrantLock, ReadWriteLock, Semaphore
-- **Atomic Operations:** AtomicInteger, AtomicReference, etc.
-- - **Blocking Queue**
-- **Concurrent Collections:** CopyOnWriteArrayList, ConcurrentHashMap
-- **Deadlocks & Starvation:** Causes and prevention
-- **Best Practices:** Designing thread-safe classes and patterns
-- **Parallel Streams & Fork/Join Framework**
-- **CompletableFuture & Asynchronous Programming**
-- **Common Pitfalls and Debugging**
-
----
-
-
-
 ## ▶️ How to Run
 
 - Each directory contains self-contained Java files with a `main` method.
