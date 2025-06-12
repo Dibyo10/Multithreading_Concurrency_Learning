@@ -51,6 +51,7 @@ To browse or run the code examples:
 - **Thread Pools:** ExecutorService, Callable, Future
 - **Advanced Locks:** ReentrantLock, ReadWriteLock, Semaphore
 - **Atomic Operations:** AtomicInteger, AtomicReference, etc.
+- - **Blocking Queue**
 - **Concurrent Collections:** CopyOnWriteArrayList, ConcurrentHashMap
 - **Deadlocks & Starvation:** Causes and prevention
 - **Best Practices:** Designing thread-safe classes and patterns
