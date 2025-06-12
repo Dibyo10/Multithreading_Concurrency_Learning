@@ -1,79 +1,70 @@
 import java.util.ArrayList;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 public class ProducerConsumer {
     public static void main(String[] args) {
-        Worker worker=new Worker(5,0);
+        BlockingQueue<String> queue=new ArrayBlockingQueue<>(5);
+        Thread p1=new Thread(new Producer(queue));
+        Thread p2=new Thread(new Producer(queue));
+        Thread c1=new Thread(new Consumer(queue));
+        Thread c2=new Thread(new Consumer(queue));
 
-        Thread producer=new Thread(()->{
-            try {
-                worker.produce();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        });
 
-        Thread consumer=new Thread(()->{
-            try {
-                worker.consume();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        });
-        producer.start();
-        consumer.start();
+        p1.start();
+        p2.start();
+        c1.start();
+        c2.start();
+
 
     }
 
 
 }
 
-class Worker{
+class Producer implements Runnable{
+    private BlockingQueue<String> queue;
 
-    private int sequence=1;
-    private final Integer top;
-    private final Integer bottom;
-    private final ArrayList<Integer> container;
-    private final Object lock=new Object();
-
-    public Worker(Integer top, Integer bottom){
-        this.top=top;
-        this.bottom=bottom;
-        this.container=new ArrayList<>();
+    Producer(BlockingQueue<String> queue) {
+        this.queue = queue;
     }
 
-
-    public void produce() throws InterruptedException{
-        synchronized (lock){
-            while(true){
-                if(container.size()==top){
-                    System.out.println("container full, waiting for items to remove..");
-
-                    lock.wait();
-                }else{
-                    System.out.println(sequence+ " produced and added ");
-                    container.add(sequence++);
-                    lock.notify();
-                }
-
-                Thread.sleep(500);
+    @Override
+    public void run(){
+        while (true){
+            try{
+                queue.put("Product");
+                System.out.println("Produced by " + Thread.currentThread().getName());
+                Thread.sleep(1000);
+            }catch(InterruptedException e){
+                throw new RuntimeException(e);
             }
         }
 
     }
 
-    public void consume() throws InterruptedException{
-        synchronized (lock){
-            while(true){
-                if(container.size()==bottom){
-                    System.out.println("Container empty..");
-                    lock.wait();
-                }else{
-                    System.out.println(container.removeFirst()+" consumed from the container");
-                    lock.notify();
-                }
-                Thread.sleep(500);
+}
+
+class Consumer implements Runnable{
+    private BlockingQueue<String> queue;
+
+    Consumer(BlockingQueue<String> queue) {
+        this.queue = queue;
+    }
+
+    @Override
+    public void run(){
+        while(true){
+            try{
+                String product = queue.take();
+                System.out.println("Consumed by " + Thread.currentThread().getName());
+                Thread.sleep(1200);
+            }catch(InterruptedException e){
+                throw new RuntimeException(e);
             }
+
         }
 
     }
+
 }
